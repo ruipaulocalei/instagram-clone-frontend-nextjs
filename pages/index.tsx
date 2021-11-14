@@ -1,6 +1,7 @@
 import type { NextPage } from 'next'
 import Head from 'next/head'
 import Image from 'next/image'
+import Button from '../components/Button'
 import styles from '../styles/Home.module.css'
 
 const Home: NextPage = () => {
@@ -12,8 +13,7 @@ const Home: NextPage = () => {
         border-2 focus:border-pink-600 rounded-md' />
         <input type="text" className='w-full p-3 focus:outline-none 
         border-2 focus:border-pink-600 rounded-md' />
-        <button type='button' className='bg-pink-600 py-3 hover:opacity-70
-        text-white rounded-md'>Login</button>
+        <Button loading={true} buttonName={'Entrar'} isClicable={false} />
       </form>
     </div>
   )
