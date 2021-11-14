@@ -10,8 +10,8 @@ const Home: NextPage = () => {
     <div className='flex items-center h-screen w-screen justify-center'>
       <form className='flex flex-col w-full max-w-sm p-8 
       bg-gray-900 space-y-4 rounded-lg'>
-        <Input />
-        <Input />
+        <Input placeholder='E-mail' />
+        <Input placeholder='Password' />
         <Button loading={false} buttonName={'Entrar'} isClicable={true} />
       </form>
     </div>
