@@ -4,6 +4,7 @@
   "scripts": {
     "dev": "next dev",
     "dev:port": "npx next dev -p 3399",
+    "apollo:codegen": "apollo client:codegen src/__generated__ --target=typescript --outputFlat",
     "build": "next build",
     "start": "next start",
     "lint": "next lint"
