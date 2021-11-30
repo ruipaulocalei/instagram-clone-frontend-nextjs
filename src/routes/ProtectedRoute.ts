@@ -27,7 +27,7 @@ const ProtectedRoute: React.FC<RouteLinkProps> = ({ children, router }) => {
     router.push(AppRoutes.LOGIN_PAGE)
   }
   else if (isBrowser() && isLoggenIn && !pathIsPrivate) {
-    router.push(AppRoutes.DASHBOARD_PAGE)
+    router.push(AppRoutes.Home_PAGE)
   }
   return children
 }

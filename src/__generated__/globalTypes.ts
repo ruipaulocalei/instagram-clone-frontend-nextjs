@@ -7,6 +7,14 @@
 // START Enums and Input Objects
 //==============================================================
 
+export interface FollowUserInput {
+  username: string;
+}
+
+export interface LikePhotoInput {
+  id: string;
+}
+
 export interface LoginInputDto {
   username: string;
   password: string;

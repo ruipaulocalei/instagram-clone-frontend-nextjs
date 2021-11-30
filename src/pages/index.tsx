@@ -8,6 +8,8 @@ import { login, loginVariables } from '../__generated__/login'
 import { logInUser } from '../apollo'
 import { useRouter } from 'next/router'
 import { AppRoutes } from '../routes/constants'
+import Error from '../components/Error'
+import Loading from '../components/Loading'
 
 interface ILogin {
   username: string
@@ -40,7 +42,7 @@ const Home: NextPage = () => {
     }
     if (token) {
       logInUser(token)
-      push(AppRoutes.DASHBOARD_PAGE)
+      push(AppRoutes.Home_PAGE)
     }
   }
 
@@ -61,15 +63,24 @@ const Home: NextPage = () => {
       }
     })
   }
+  if (loading) return <Loading />
   return (
     <div className='flex items-center h-screen w-screen justify-center'>
       <form onSubmit={handleSubmit(onSubmit)} className='flex flex-col w-full max-w-sm p-8 
-      bg-gray-900 space-y-4 rounded-lg'>
-        <Input {...register('username', { required: true })}
-          placeholder='Username' onChange={() => clearErrors('username')} />
-        <Input {...register('password', { required: true, minLength: 6 })}
-          placeholder='Password' onChange={() => clearErrors('password')} />
+    bg-gray-900 space-y-4 rounded-lg'>
+        <div>
+          <Input {...register('username', { required: true })}
+            placeholder='Username' onChange={() => clearErrors('username')} />
+          {/* {errors.username?.message ? <Error message={errors.username.message} /> : null} */}
+        </div>
+        <div>
+          <Input {...register('password', { required: true, minLength: 6 })}
+            placeholder='Password' onChange={() => clearErrors('password')} />
+          {/* {errors.password?.message && <Error message={errors.password.message} />} */}
+          {errors.password?.type === 'minLength' && <Error message='6 caracteres no mínimo' />}
+        </div>
         <Button loading={loading} buttonName={loading ? 'Carregar' : 'Entrar'} isClicable={isValid} />
+        {data?.login.error && <Error message={data.login?.error} />}
       </form>
     </div>
   )

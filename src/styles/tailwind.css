@@ -4,6 +4,10 @@
 
 @layer components {
     body {
-        @apply bg-gray-800 text-white;
+        @apply text-black bg-gray-50;
+    }
+
+    .btn {
+        @apply h-7 hover:scale-125 cursor-pointer transition-all duration-150 ease-out;
     }
 }

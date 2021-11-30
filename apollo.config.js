@@ -4,7 +4,7 @@ module.exports = {
         tagName: "gql",
         service: {
             name: "instaclone",
-            url: 'http://localhost:3333/graphql',
+            url: 'http://localhost:4200/graphql',
         }
     }
 }
