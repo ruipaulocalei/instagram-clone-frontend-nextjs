@@ -52,7 +52,9 @@ const r = ['isLiked', 'numberLikes']
 const Feed: React.FC = () => {
   const { data, loading, error } = useQuery<feed>(FEED_QUERY)
   const { getValues, handleSubmit, register, formState: { isValid, errors } }
-    = useForm<ICommentProps>()
+    = useForm<ICommentProps>({
+      mode: 'onTouched'
+    })
   const [likePhoto] = useMutation<like, likeVariables>(LIKE_MUTATION)
 
   const togglePhoto = async ({ id }: IFeed) => {
@@ -139,16 +141,15 @@ const Feed: React.FC = () => {
               <EmojiHappyIcon className='btn' />
               <input {...register('title', { required: true, minLength: '1' })} className='focus:ring-0 outline-none border-none flex-1'
                 type="text" placeholder='Adicione um comentario' />
-              <button disabled={isValid ? false : true} className='text-blue-400'>Comentar</button>
+              <button disabled={isValid ? false : true}
+                className={`${isValid ? 'text-blue-400 hover:opacity-70' :
+                  'text-gray-300 pointer-events-none'}`}>Comentar</button>
+
             </form>
           </div>
         </section>
       )
       )}
-
-      <section className='fixed top-32 left-8'>
-        <h1>Hello Rui</h1>
-      </section>
     </>
   )
 }

@@ -10,6 +10,7 @@ import ButtonFollow from '../components/ButtonFollow';
 import Loading from '../components/Loading';
 import { unfollowUser, unfollowUserVariables } from '../__generated__/unfollowUser';
 import { followUser, followUserVariables } from '../__generated__/followUser';
+import { useUser } from '../hooks/useUser';
 
 const SEE_PROFILE_QUERY = gql`
   query seeProfile($input: String!) {
@@ -61,7 +62,9 @@ const Profile: React.FC = () => {
     }
   })
 
+
   const client = useApolloClient()
+
   const onCompleted = (data: followUser) => {
     const { followUser: { ok } } = data
     if (!ok) {
@@ -73,9 +76,22 @@ const Profile: React.FC = () => {
       fields: {
         isFollowing(prev) {
           return true
+        },
+        totalFollowers(prev) {
+          return prev + 1
         }
       }
     })
+
+    // const { data: userData } = useUser()
+    // cache.modify({
+    //   id: `UserModel:${userData?.me?.username && userData?.me?.username}`,
+    //   fields: {
+    //     totalFollowing(prev) {
+    //       return prev + 1
+    //     }
+    //   }
+    // })
   }
 
   const [followUser] = useMutation<followUser, followUserVariables>(FOLLOW_USER_MUTATION, {
@@ -96,15 +112,28 @@ const Profile: React.FC = () => {
     update(cache, result) {
       const { data: dataResult } = result
       if (dataResult?.unfollowUser.ok) {
-        console.log(dataResult?.unfollowUser.ok)
+        // console.log(dataResult?.unfollowUser.ok)
         cache.modify({
           id: `UserModel:${username}`,
           fields: {
             isFollowing(prev) {
               return false
+            },
+            totalFollowers(prev) {
+              return prev - 1
             }
           }
         })
+
+        // const { data: userData } = useUser()
+        // cache.modify({
+        //   id: `UserModel:${userData?.me?.username && userData?.me?.username}`,
+        //   fields: {
+        //     totalFollowing(prev) {
+        //       return prev - 1
+        //     }
+        //   }
+        // })
       }
     }
   })
@@ -120,7 +149,7 @@ const Profile: React.FC = () => {
             <div className='flex items-center space-x-8'>
               <h4 className='text-2xl'>{data?.seeProfile.profile?.username}</h4>
               {data?.seeProfile.profile?.isMe ?
-                <span className='p-2 border'>Editar perfil</span> :
+                <span className='p-2 border cursor-pointer'>Editar perfil</span> :
                 data?.seeProfile.profile?.isFollowing ?
                   <ButtonFollow onClick={unfollowUser}>Não Seguir</ButtonFollow>
                   : <ButtonFollow onClick={followUser}>Seguir</ButtonFollow>}
