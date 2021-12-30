@@ -17,14 +17,14 @@ const USER_QUERY = gql`
 
 export const useUser = () => {
   const hasToken = useReactiveVar(isLoggedInVar)
-  const { data, error } = useQuery<me>(USER_QUERY, {
+  const { data } = useQuery<me>(USER_QUERY, {
     skip: !hasToken,
   })
   useEffect(() => {
-    if (error) {
+    if (data?.me === null) {
       logOutUser()
     }
-  }, [data, error])
+  }, [data])
   return { data }
 }
 

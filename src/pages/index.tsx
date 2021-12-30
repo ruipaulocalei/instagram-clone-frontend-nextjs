@@ -6,20 +6,6 @@ import { useEffect } from 'react'
 import { isLoggedInVar, logInUser } from '../apollo'
 import { AppRoutes } from '../routes/constants'
 
-interface ILogin {
-  username: string
-  password: string
-}
-const LOGIN_MUTATION = gql`
-  mutation login($login: LoginInputDto!) {
-    login(input: $login) {
-      ok
-      token
-      error
-    }
-  }
-`
-
 const Home: NextPage = () => {
   const { push, } = useRouter()
   const isLoggedIn = useReactiveVar(isLoggedInVar)

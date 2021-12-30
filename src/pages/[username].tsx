@@ -55,6 +55,7 @@ const UNFOLLOW_USER_MUTATION = gql`
   }
 `
 const Profile: React.FC = () => {
+  const { data: userData } = useUser()
   const { query: { username } } = useRouter()
   const { data, loading, error } = useQuery<seeProfile, seeProfileVariables>(SEE_PROFILE_QUERY, {
     variables: {
@@ -82,16 +83,14 @@ const Profile: React.FC = () => {
         }
       }
     })
-
-    // const { data: userData } = useUser()
-    // cache.modify({
-    //   id: `UserModel:${userData?.me?.username && userData?.me?.username}`,
-    //   fields: {
-    //     totalFollowing(prev) {
-    //       return prev + 1
-    //     }
-    //   }
-    // })
+    cache.modify({
+      id: `UserModel:${userData?.me.username}`,
+      fields: {
+        totalFollowing(prev) {
+          return prev + 1
+        }
+      }
+    })
   }
 
   const [followUser] = useMutation<followUser, followUserVariables>(FOLLOW_USER_MUTATION, {
@@ -124,16 +123,14 @@ const Profile: React.FC = () => {
             }
           }
         })
-
-        // const { data: userData } = useUser()
-        // cache.modify({
-        //   id: `UserModel:${userData?.me?.username && userData?.me?.username}`,
-        //   fields: {
-        //     totalFollowing(prev) {
-        //       return prev - 1
-        //     }
-        //   }
-        // })
+        cache.modify({
+          id: `UserModel:${userData?.me.username}`,
+          fields: {
+            totalFollowing(prev) {
+              return prev - 1
+            }
+          }
+        })
       }
     }
   })
