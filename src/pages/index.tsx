@@ -35,7 +35,7 @@ const Home: NextPage = () => {
 
   return (
     <div className='flex items-center h-screen w-screen justify-center'>
-      <h1>Splash Screen</h1>
+      <h1>INSTAGRAM CLONE</h1>
     </div>
   )
 }

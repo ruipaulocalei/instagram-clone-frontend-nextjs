@@ -49,7 +49,7 @@ const Login: React.FC = () => {
   })
   const onSubmit = () => {
     if (loading) {
-      return
+      return <Loading />
     }
     const { username, password } = getValues()
     login({
