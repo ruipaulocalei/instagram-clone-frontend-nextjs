@@ -1,5 +1,5 @@
-# INSTAGRAM CLONE - BACKEND
-## NESTJS + GRAPHQL + PRISMA + SQLITE
+# Instagram Clone Frontend 
+## Nextjs + Apollo Client GraphQL + TailwindCSS 
 
 ### USER
 - [x] CREATE ACCOUNT
